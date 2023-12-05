@@ -1,14 +1,13 @@
 import React from "react";
 import Header from "./components/Header";
-import CookiesModal from "./components/CookiesModal";
+import Vista from "./components/Vista";
 
 function App() {
     return (
         <>
-            <div className="p-4 background">
+            <div className="p-4 background space-y-4">
                 <Header></Header>
-                {/* vista */}
-                <CookiesModal></CookiesModal>
+                <Vista></Vista>
             </div>
         </>
     );
