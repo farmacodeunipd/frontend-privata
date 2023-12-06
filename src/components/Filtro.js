@@ -23,12 +23,12 @@ function Filtro() {
                         >
                             Choose a car:
                         </label>
-                        <select name="cars" id="cars" className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        <select name="cars" id="cars" className="mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <option value="0" selected disabled>
                                 Selezionare...
                             </option>
                             {cars.map((cars) => (
-                                <option value={cars.valore} className="text-gray-700 hover:bg-gray-100 hover:text-gray-900">{cars.nome}</option>
+                                <option value={cars.valore}>{cars.nome}</option>
                             ))}
                         </select>
                     </div>
@@ -56,7 +56,7 @@ function Filtro() {
                                 Selezionare...
                             </option>
                             {tops.map((tops) => (
-                                <option value={tops.valore} className="text-gray-700 hover:bg-gray-100 hover:text-gray-900">{tops.nome}</option>
+                                <option value={tops.valore}>{tops.nome}</option>
                             ))}
                         </select>
                     </div>
