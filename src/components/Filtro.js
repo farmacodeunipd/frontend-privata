@@ -19,7 +19,7 @@ function Filtro() {
                     <div>
                         <label
                             for="cars"
-                            className="text-black dark:text-white pr-1"
+                            className="text-black dark:text-white pr-2"
                         >
                             Choose a car:
                         </label>
@@ -35,7 +35,7 @@ function Filtro() {
                     <div>
                         <label
                             for="dogs"
-                            className="text-black dark:text-white pr-1"
+                            className="text-black dark:text-white pr-2"
                         >
                             Choose a car:
                         </label>
@@ -48,7 +48,7 @@ function Filtro() {
                         </datalist>
                     </div>
                     <div>
-                        <label for="top" className="text-black dark:text-white pr-1">
+                        <label for="top" className="text-black dark:text-white pr-2">
                             Choose a top:
                         </label>
                         <select name="top" id="cars" className="mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
