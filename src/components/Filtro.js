@@ -40,7 +40,7 @@ function Filtro() {
                             Choose a car:
                         </label>
                         <input type="text" list="dogs" />
-                        <datalist id="dogs" className="mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <datalist id="dogs">
                             <option>Volvo</option>
                             <option>Saab</option>
                             <option>Mercedes</option>
