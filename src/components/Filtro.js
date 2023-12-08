@@ -63,9 +63,12 @@ function Filtro() {
                       .includes(query.toLowerCase().replace(/\s+/g, ""))
               );
 
+    var disabilitato =
+        selectedSearchTopic.id === 1 || selectedTop.id === 1 ? true : false;
+
     return (
         <>
-            <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-3xl">
+            <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-3xl shadow-lg">
                 <form
                     className="flex flex-col justify-center md:flex-row md:justify-around md:items-center space-y-2 md:space-y-0"
                     action=""
@@ -385,14 +388,30 @@ function Filtro() {
                     <div className="mx-auto">
                         <button
                             type="button"
-                            className="bg-green-600 dark:bg-green-800 hover:bg-green-800 dark:hover:bg-green-900 text-white font-bold cursor-pointer rounded-lg py-2 px-6 text-center shadow-lg ring-1 ring-black/5 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-700 sm:text-sm"
+                            disabled={disabilitato}
+                            className={
+                                disabilitato
+                                    ? "bg-green-600 dark:bg-green-800 text-white font-bold cursor-not-allowed rounded-lg py-2 px-6 text-center shadow-lg ring-1 ring-black/5 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-700 sm:text-sm opacity-50"
+                                    : "bg-green-600 dark:bg-green-800 hover:bg-green-800 dark:hover:bg-green-900 text-white font-bold cursor-pointer rounded-lg py-2 px-6 text-center shadow-lg ring-1 ring-black/5 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-700 sm:text-sm"
+                            }
                             onClick={() => {
-                                console.log(
-                                    "SearchTopic: " +
-                                        selectedSearchTopic.name +
-                                        "\nTop: " +
-                                        selectedTop.name
-                                );
+                                selectedSearchTopic.id === 2
+                                    ? console.log(
+                                          "SearchTopic: " +
+                                              selectedSearchTopic.name +
+                                              "\nCliente: " +
+                                              selectedClient.name +
+                                              "\nTop: " +
+                                              selectedTop.name
+                                      )
+                                    : console.log(
+                                          "SearchTopic: " +
+                                              selectedSearchTopic.name +
+                                              "\nProdotto: " +
+                                              selectedProduct.name +
+                                              "\nTop: " +
+                                              selectedTop.name
+                                      );
                             }}
                         >
                             Ricerca
