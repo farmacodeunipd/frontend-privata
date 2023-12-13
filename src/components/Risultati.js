@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const people = [
     {
@@ -54,6 +54,29 @@ const people = [
 ];
 
 function Risultati() {
+    // Esempio di richiesta POST dalla web app all'API
+    const datiInput = {
+        // Inserire i dati necessari per l'algoritmo
+        'parametro1': 'valore1',
+        'parametro2': 'valore2',
+    };
+
+    useEffect(() => {
+        fetch('http://localhost:3000/esegui_algoritmo', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(datiInput),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Gestire la risposta dell'algoritmo
+                console.log('Risultato dell\'algoritmo:', data.risultato);
+            })
+            .catch(error => console.error('Errore durante la richiesta:', error));
+    }, [])
+
     return (
         <>
             <div className="overflow-y-auto custom-scrollbar shadow-lg ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 rounded-3xl">
