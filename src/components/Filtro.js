@@ -3,38 +3,28 @@ import { Listbox, Combobox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
 const searchTopics = [
-    { id: 1, name: "Seleziona topic...", unavailable: true },
-    { id: 2, name: "Clienti", unavailable: false },
-    { id: 3, name: "Prodotti", unavailable: false },
+    { id: 1, name: "Seleziona topic...", valore: "null", unavailable: true },
+    { id: 2, name: "Clienti", valore: "user", unavailable: false },
+    { id: 3, name: "Prodotti", valore: "item", unavailable: false },
 ];
 
 // poi sostituire con dati dal backend
-const clients = [
-    { id: 1, name: "Wade Cooper" },
-    { id: 2, name: "Arlene Mccoy" },
-    { id: 3, name: "Devon Webb" },
-    { id: 4, name: "Tom Cook" },
-    { id: 5, name: "Tanya Fox" },
-    { id: 6, name: "Hellen Schmidt" },
-];
+const clients = [{ id: 120, name: "Cliente 120" }];
 
 // poi sostituire con dati dal backend
-const products = [
-    { id: 1, name: "Water" },
-    { id: 2, name: "Milk" },
-    { id: 3, name: "Beer" },
-    { id: 4, name: "Coca Cola" },
-    { id: 5, name: "Sprite" },
-    { id: 6, name: "Prosecco" },
-];
+const products = [{ id: 1112226, name: "Prodotto 1112226" }];
 
 const tops = [
-    { id: 1, name: "Seleziona N...", unavailable: true },
-    { id: 2, name: "Top 5", unavailable: false },
-    { id: 3, name: "Top 10", unavailable: false },
+    { id: 1, name: "Seleziona N...", valore: "null", unavailable: true },
+    { id: 2, name: "Top 5", valore: "5", unavailable: false },
+    { id: 3, name: "Top 10", valore: "10", unavailable: false },
 ];
 
-function Filtro() {
+function Filtro({ onFetchResults }) {
+    // const [object, setObject] = useState("item");
+    // const [id, setId] = useState("1112226");
+    // const [n, setN] = useState("20");
+
     const [selectedSearchTopic, setSelectedSearchTopic] = useState(
         searchTopics[0]
     );
@@ -47,21 +37,21 @@ function Filtro() {
         query === ""
             ? clients
             : clients.filter((client) =>
-                client.name
-                    .toLowerCase()
-                    .replace(/\s+/g, "")
-                    .includes(query.toLowerCase().replace(/\s+/g, ""))
-            );
+                  client.name
+                      .toLowerCase()
+                      .replace(/\s+/g, "")
+                      .includes(query.toLowerCase().replace(/\s+/g, ""))
+              );
 
     const filteredProducts =
         query === ""
             ? products
             : products.filter((product) =>
-                product.name
-                    .toLowerCase()
-                    .replace(/\s+/g, "")
-                    .includes(query.toLowerCase().replace(/\s+/g, ""))
-            );
+                  product.name
+                      .toLowerCase()
+                      .replace(/\s+/g, "")
+                      .includes(query.toLowerCase().replace(/\s+/g, ""))
+              );
 
     var disabilitato =
         selectedSearchTopic.id === 1 || selectedTop.id === 1 ? true : false;
@@ -97,12 +87,14 @@ function Filtro() {
                                         <Listbox.Option
                                             key={searchTopic.id}
                                             className={({ active }) =>
-                                                `relative cursor-pointer select-none py-2 pl-10 pr-4 ${active
-                                                    ? "bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
-                                                    : "text-gray-900 dark:text-white"
-                                                } ${searchTopic.unavailable
-                                                    ? "opacity-50"
-                                                    : ""
+                                                `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
+                                                    active
+                                                        ? "bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
+                                                        : "text-gray-900 dark:text-white"
+                                                } ${
+                                                    searchTopic.unavailable
+                                                        ? "opacity-50"
+                                                        : ""
                                                 }`
                                             }
                                             value={searchTopic}
@@ -111,10 +103,11 @@ function Filtro() {
                                             {({ selected }) => (
                                                 <>
                                                     <span
-                                                        className={`block truncate ${selected
+                                                        className={`block truncate ${
+                                                            selected
                                                                 ? "font-medium"
                                                                 : "font-normal"
-                                                            }`}
+                                                        }`}
                                                     >
                                                         {searchTopic.name}
                                                     </span>
@@ -172,7 +165,7 @@ function Filtro() {
                                         </div>
                                         <Combobox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
                                             {filteredClients.length === 0 &&
-                                                query !== "" ? (
+                                            query !== "" ? (
                                                 <div className="relative cursor-pointer select-none px-4 py-2 text-gray-700">
                                                     Nessuna corrispondenza.
                                                 </div>
@@ -184,9 +177,10 @@ function Filtro() {
                                                             className={({
                                                                 active,
                                                             }) =>
-                                                                `relative cursor-pointer select-none py-2 pl-10 pr-4 ${active
-                                                                    ? "bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
-                                                                    : "text-gray-900 dark:text-white"
+                                                                `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
+                                                                    active
+                                                                        ? "bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
+                                                                        : "text-gray-900 dark:text-white"
                                                                 }`
                                                             }
                                                             value={client}
@@ -197,10 +191,11 @@ function Filtro() {
                                                             }) => (
                                                                 <>
                                                                     <span
-                                                                        className={`block truncate ${selected
+                                                                        className={`block truncate ${
+                                                                            selected
                                                                                 ? "font-medium"
                                                                                 : "font-normal"
-                                                                            }`}
+                                                                        }`}
                                                                     >
                                                                         {
                                                                             client.name
@@ -260,7 +255,7 @@ function Filtro() {
                                         </div>
                                         <Combobox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
                                             {filteredProducts.length === 0 &&
-                                                query !== "" ? (
+                                            query !== "" ? (
                                                 <div className="relative cursor-pointer select-none px-4 py-2 text-gray-700">
                                                     Nessuna corrispondenza.
                                                 </div>
@@ -272,9 +267,10 @@ function Filtro() {
                                                             className={({
                                                                 active,
                                                             }) =>
-                                                                `relative cursor-pointer select-none py-2 pl-10 pr-4 ${active
-                                                                    ? "bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
-                                                                    : "text-gray-900 dark:text-white"
+                                                                `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
+                                                                    active
+                                                                        ? "bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
+                                                                        : "text-gray-900 dark:text-white"
                                                                 }`
                                                             }
                                                             value={product}
@@ -285,10 +281,11 @@ function Filtro() {
                                                             }) => (
                                                                 <>
                                                                     <span
-                                                                        className={`block truncate ${selected
+                                                                        className={`block truncate ${
+                                                                            selected
                                                                                 ? "font-medium"
                                                                                 : "font-normal"
-                                                                            }`}
+                                                                        }`}
                                                                     >
                                                                         {
                                                                             product.name
@@ -337,12 +334,14 @@ function Filtro() {
                                         <Listbox.Option
                                             key={top.id}
                                             className={({ active }) =>
-                                                `relative cursor-pointer select-none py-2 pl-10 pr-4 ${active
-                                                    ? "bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
-                                                    : "text-gray-900 dark:text-white"
-                                                } ${top.unavailable
-                                                    ? "opacity-50"
-                                                    : ""
+                                                `relative cursor-pointer select-none py-2 pl-10 pr-4 ${
+                                                    active
+                                                        ? "bg-green-100 dark:bg-green-900 text-green-900 dark:text-green-100"
+                                                        : "text-gray-900 dark:text-white"
+                                                } ${
+                                                    top.unavailable
+                                                        ? "opacity-50"
+                                                        : ""
                                                 }`
                                             }
                                             value={top}
@@ -351,10 +350,11 @@ function Filtro() {
                                             {({ selected }) => (
                                                 <>
                                                     <span
-                                                        className={`block truncate ${selected
+                                                        className={`block truncate ${
+                                                            selected
                                                                 ? "font-medium"
                                                                 : "font-normal"
-                                                            }`}
+                                                        }`}
                                                     >
                                                         {top.name}
                                                     </span>
@@ -385,23 +385,15 @@ function Filtro() {
                                     : "bg-green-600 dark:bg-green-800 hover:bg-green-800 dark:hover:bg-green-900 text-white font-bold cursor-pointer rounded-lg py-2 px-6 text-center shadow-lg ring-1 ring-black/5 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-gray-700 sm:text-sm"
                             }
                             onClick={() => {
-                                selectedSearchTopic.id === 2
-                                    ? console.log(
-                                        "SearchTopic: " +
-                                        selectedSearchTopic.name +
-                                        "\nCliente: " +
-                                        selectedClient.name +
-                                        "\nTop: " +
-                                        selectedTop.name
-                                    )
-                                    : console.log(
-                                        "SearchTopic: " +
-                                        selectedSearchTopic.name +
-                                        "\nProdotto: " +
-                                        selectedProduct.name +
-                                        "\nTop: " +
-                                        selectedTop.name
-                                    );
+                                var id =
+                                    selectedSearchTopic.id === 2
+                                        ? selectedClient.id
+                                        : selectedProduct.id;
+                                onFetchResults(
+                                    selectedSearchTopic.valore,
+                                    id,
+                                    selectedTop.valore
+                                );
                             }}
                         >
                             Ricerca

@@ -84,7 +84,7 @@ class Model:
             top_n[iid] = est
 
         top_n = sorted(top_n.items(), key=lambda x: x[1], reverse=True)[:n]
-        return dict(top_n)
+        return top_n
     
     # metodo che dato ID item (NUMERICO) e n, ritorna n ID user migliori per quell'item
     def topN_1ItemNUser(self, item_id, n=5):
