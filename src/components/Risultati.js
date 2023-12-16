@@ -1,9 +1,14 @@
 import React from "react";
+import { StarIcon } from "@heroicons/react/20/solid";
+
+function classNames(...classes) {
+    return classes.filter(Boolean).join(" ");
+}
 
 function Risultati({ data }) {
     return (
         <>
-            <div className="overflow-y-auto custom-scrollbar shadow-lg ring-1 ring-black ring-opacity-5 sm:-mx-6 md:mx-0 rounded-3xl">
+            <div className="overflow-y-auto custom-scrollbar shadow-lg ring-1 ring-black ring-opacity-5 md:mx-0 rounded-3xl">
                 <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-950">
                     <thead className="bg-gray-50 dark:bg-gray-700">
                         <tr>
@@ -37,7 +42,20 @@ function Risultati({ data }) {
                                     {/* {nome} */}
                                 </td>
                                 <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500  dark:text-gray-200 lg:table-cell">
-                                    {data.value}
+                                    {/* {data.value} */}
+                                    <div className="flex items-center">
+                                        {[1, 2, 3, 4, 5].map((rating) => (
+                                            <StarIcon
+                                                key={rating}
+                                                className={classNames(
+                                                    data.value > rating
+                                                        ? "text-gray-800 dark:text-gray-900"
+                                                        : "text-gray-300 dark:text-gray-200",
+                                                    "h-5 w-5 flex-shrink-0"
+                                                )}
+                                            ></StarIcon>
+                                        ))}
+                                    </div>
                                 </td>
                             </tr>
                         ))}

@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Filtro from "./Filtro";
 import axios from "axios";
 import NessunRisultato from "./NessunRisultato";
@@ -24,12 +24,40 @@ function Vista() {
             });
     }
 
+    const [clients, setClients] = useState([]);
+    useEffect(() => {
+        getClients();
+    }, []);
+
+    function getClients() {
+        axios.get("http://localhost/api/clients/").then((response) => {
+            setClients(response.data);
+        });
+    }
+
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        getProducts();
+    }, []);
+
+    function getProducts() {
+        axios.get("http://localhost/api/products/").then((response) => {
+            setProducts(response.data);
+        });
+    }
+
     return (
         <>
             <div className="p-4 space-y-4 bg-gray-200 dark:bg-gray-900 rounded-3xl shadow-lg flex flex-col h-full overflow-hidden">
-                <Filtro onFetchResults={fetchResults}></Filtro>
+                <Filtro
+                    onFetchResults={fetchResults}
+                    clients={clients}
+                    products={products}
+                ></Filtro>
                 {/* <button onClick={fetchResults}>clicca</button> */}
-                {results === null ? <NessunRisultato></NessunRisultato> : null}
+                {results === null && !loading ? (
+                    <NessunRisultato></NessunRisultato>
+                ) : null}
                 {loading ? (
                     <p className="dark:text-white">Caricamento in corso...</p>
                 ) : (

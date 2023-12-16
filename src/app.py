@@ -14,10 +14,10 @@ def esegui_algoritmo_endpoint(object, id, n):
     try:
         if object == "user": 
             dictionary = model.topN_1UserNItem(int(id), int(n))
-            result_list = [{"id": str(uid), "value": float(est)} for uid, est in dictionary]
+            result_list = [{"id": str(uid), "value": int(est)} for uid, est in dictionary]
         elif object == "item":
             dictionary = model.topN_1ItemNUser(int(id), int(n))
-            result_list = [{"id": str(uid), "value": float(est)} for uid, est in dictionary]
+            result_list = [{"id": str(uid), "value": int(est)} for uid, est in dictionary]
         else:
             return jsonify({'errore': "Wrong object. Select user or item"}), 500
 

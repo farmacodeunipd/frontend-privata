@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import { Listbox, Combobox } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
 
@@ -8,28 +8,28 @@ const searchTopics = [
     { id: 3, name: "Prodotti", valore: "item", unavailable: false },
 ];
 
-// poi sostituire con dati dal backend
-const clients = [{ id: 120, name: "Cliente 120" }];
-
-// poi sostituire con dati dal backend
-const products = [{ id: 1112226, name: "Prodotto 1112226" }];
-
 const tops = [
     { id: 1, name: "Seleziona N...", valore: "null", unavailable: true },
     { id: 2, name: "Top 5", valore: "5", unavailable: false },
     { id: 3, name: "Top 10", valore: "10", unavailable: false },
 ];
 
-function Filtro({ onFetchResults }) {
-    // const [object, setObject] = useState("item");
-    // const [id, setId] = useState("1112226");
-    // const [n, setN] = useState("20");
-
+function Filtro({ onFetchResults, clients, products }) {
     const [selectedSearchTopic, setSelectedSearchTopic] = useState(
         searchTopics[0]
     );
-    const [selectedClient, setSelectedClient] = useState(clients[0]);
-    const [selectedProduct, setSelectedProduct] = useState(products[0]);
+    const [selectedClient, setSelectedClient] = useState();
+    useEffect(() => {
+        if (clients.length > 0) {
+            setSelectedClient(clients[0]);
+        }
+    }, [clients]);
+    const [selectedProduct, setSelectedProduct] = useState();
+    useEffect(() => {
+        if (products.length > 0) {
+            setSelectedProduct(products[0]);
+        }
+    }, [products]);
     const [query, setQuery] = useState("");
     const [selectedTop, setSelectedTop] = useState(tops[0]);
 
@@ -37,7 +37,7 @@ function Filtro({ onFetchResults }) {
         query === ""
             ? clients
             : clients.filter((client) =>
-                  client.name
+                  client.rag_soc
                       .toLowerCase()
                       .replace(/\s+/g, "")
                       .includes(query.toLowerCase().replace(/\s+/g, ""))
@@ -47,7 +47,7 @@ function Filtro({ onFetchResults }) {
         query === ""
             ? products
             : products.filter((product) =>
-                  product.name
+                  product.des_art
                       .toLowerCase()
                       .replace(/\s+/g, "")
                       .includes(query.toLowerCase().replace(/\s+/g, ""))
@@ -61,7 +61,6 @@ function Filtro({ onFetchResults }) {
             <div className="p-4 bg-gray-50 dark:bg-gray-700 rounded-3xl shadow-lg">
                 <form
                     className="flex flex-col justify-center md:flex-row md:justify-around md:items-center space-y-2 md:space-y-0"
-                    action=""
                     method="post"
                 >
                     <div className="w-48 mx-auto">
@@ -82,7 +81,7 @@ function Filtro({ onFetchResults }) {
                                         />
                                     </span>
                                 </Listbox.Button>
-                                <Listbox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                <Listbox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm custom-scrollbar">
                                     {searchTopics.map((searchTopic) => (
                                         <Listbox.Option
                                             key={searchTopic.id}
@@ -128,7 +127,7 @@ function Filtro({ onFetchResults }) {
                         </Listbox>
                     </div>
                     {selectedSearchTopic.id === 1 ? null : (
-                        <div className="w-48 mx-auto">
+                        <div className="w-48 lg:w-96 xl:w-[35rem] mx-auto">
                             {selectedSearchTopic.id === 2 ? (
                                 <Combobox
                                     value={selectedClient}
@@ -150,7 +149,7 @@ function Filtro({ onFetchResults }) {
                                             <Combobox.Input
                                                 className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-0 focus:outline-none"
                                                 displayValue={(client) =>
-                                                    client.name
+                                                    client.rag_soc
                                                 }
                                                 onChange={(event) =>
                                                     setQuery(event.target.value)
@@ -163,7 +162,7 @@ function Filtro({ onFetchResults }) {
                                                 />
                                             </Combobox.Button>
                                         </div>
-                                        <Combobox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                        <Combobox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm custom-scrollbar">
                                             {filteredClients.length === 0 &&
                                             query !== "" ? (
                                                 <div className="relative cursor-pointer select-none px-4 py-2 text-gray-700">
@@ -173,7 +172,7 @@ function Filtro({ onFetchResults }) {
                                                 filteredClients.map(
                                                     (client) => (
                                                         <Combobox.Option
-                                                            key={client.id}
+                                                            key={client.cod_cli}
                                                             className={({
                                                                 active,
                                                             }) =>
@@ -198,7 +197,7 @@ function Filtro({ onFetchResults }) {
                                                                         }`}
                                                                     >
                                                                         {
-                                                                            client.name
+                                                                            client.rag_soc
                                                                         }
                                                                     </span>
                                                                     {selected ? (
@@ -240,7 +239,7 @@ function Filtro({ onFetchResults }) {
                                             <Combobox.Input
                                                 className="w-full border-none py-2 pl-3 pr-10 text-sm leading-5 bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-0 focus:outline-none"
                                                 displayValue={(product) =>
-                                                    product.name
+                                                    product.des_art
                                                 }
                                                 onChange={(event) =>
                                                     setQuery(event.target.value)
@@ -253,7 +252,7 @@ function Filtro({ onFetchResults }) {
                                                 />
                                             </Combobox.Button>
                                         </div>
-                                        <Combobox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                        <Combobox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm custom-scrollbar">
                                             {filteredProducts.length === 0 &&
                                             query !== "" ? (
                                                 <div className="relative cursor-pointer select-none px-4 py-2 text-gray-700">
@@ -263,7 +262,9 @@ function Filtro({ onFetchResults }) {
                                                 filteredProducts.map(
                                                     (product) => (
                                                         <Combobox.Option
-                                                            key={product.id}
+                                                            key={
+                                                                product.cod_art
+                                                            }
                                                             className={({
                                                                 active,
                                                             }) =>
@@ -288,7 +289,7 @@ function Filtro({ onFetchResults }) {
                                                                         }`}
                                                                     >
                                                                         {
-                                                                            product.name
+                                                                            product.des_art
                                                                         }
                                                                     </span>
                                                                     {selected ? (
@@ -329,7 +330,7 @@ function Filtro({ onFetchResults }) {
                                         />
                                     </span>
                                 </Listbox.Button>
-                                <Listbox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+                                <Listbox.Options className="z-30 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-gray-100 dark:bg-gray-900 py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm custom-scrollbar">
                                     {tops.map((top) => (
                                         <Listbox.Option
                                             key={top.id}
@@ -387,8 +388,8 @@ function Filtro({ onFetchResults }) {
                             onClick={() => {
                                 var id =
                                     selectedSearchTopic.id === 2
-                                        ? selectedClient.id
-                                        : selectedProduct.id;
+                                        ? selectedClient.cod_cli
+                                        : selectedProduct.cod_art;
                                 onFetchResults(
                                     selectedSearchTopic.valore,
                                     id,

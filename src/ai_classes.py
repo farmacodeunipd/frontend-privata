@@ -5,6 +5,9 @@ from collections import defaultdict
 import pickle
 import os
 
+def rating_float2int (float_rating, float_ratingMax = 2, int_ratingMax = 5, float_ratingMin = 0, int_ratingMin = 1):
+      return int((float_rating - float_ratingMin) / (float_ratingMax - float_ratingMin) * (int_ratingMax - int_ratingMin)) + int_ratingMin
+
 # classe contenitore che contiene info relative al file ed ai dati
 # (model_file: path del file che memorizza il modello, file_path: nome del file contenente i dati di training, columns: nome delle colonne del file di training, scale: scala di rating (da 0 a 2 perché propria per il logaritmo usato))
 class FileInfo:
@@ -79,9 +82,9 @@ class Model:
         
         predictions = self.model.test(testset_filteredUI)
 
-        top_n = defaultdict(float)
+        top_n = defaultdict(int)
         for uid, iid, true_r, est, _ in predictions:
-            top_n[iid] = est
+            top_n[iid] = rating_float2int(est)
 
         top_n = sorted(top_n.items(), key=lambda x: x[1], reverse=True)[:n]
         return top_n
@@ -97,7 +100,7 @@ class Model:
 
         top_n = defaultdict(float)
         for uid, iid, true_r, est, _ in predictions:
-            top_n[uid] = est
+            top_n[uid] = rating_float2int(est)
 
         top_n = sorted(top_n.items(), key=lambda x: x[1], reverse=True)[:n]
         return top_n
