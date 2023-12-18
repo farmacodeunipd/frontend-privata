@@ -35,7 +35,7 @@ function Risultati({ data, selectTopic }) {
             setNames(names);
         };
         fetchData();
-    }, [data]);
+    }, [data, selectTopic]);
 
     return (
         <>
