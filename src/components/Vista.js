@@ -7,6 +7,11 @@ import Risultati from "./Risultati";
 function Vista() {
     const [results, setResults] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [selectTopic, setSelectedTopic] = useState("client");
+
+    function handleTopicChange(type) {
+        setSelectedTopic(type);
+    }
 
     function fetchResults(object, id, n) {
         setLoading(true);
@@ -30,7 +35,7 @@ function Vista() {
     }, []);
 
     function getClients() {
-        axios.get("http://localhost/api/clients/").then((response) => {
+        axios.get("http://localhost/api/clients").then((response) => {
             setClients(response.data);
         });
     }
@@ -41,7 +46,7 @@ function Vista() {
     }, []);
 
     function getProducts() {
-        axios.get("http://localhost/api/products/").then((response) => {
+        axios.get("http://localhost/api/products").then((response) => {
             setProducts(response.data);
         });
     }
@@ -53,15 +58,20 @@ function Vista() {
                     onFetchResults={fetchResults}
                     clients={clients}
                     products={products}
+                    onTopicChange={handleTopicChange}
                 ></Filtro>
-                {/* <button onClick={fetchResults}>clicca</button> */}
                 {results === null && !loading ? (
                     <NessunRisultato></NessunRisultato>
                 ) : null}
                 {loading ? (
                     <p className="dark:text-white">Caricamento in corso...</p>
                 ) : (
-                    results !== null && <Risultati data={results}></Risultati>
+                    results !== null && (
+                        <Risultati
+                            data={results}
+                            selectTopic={selectTopic}
+                        ></Risultati>
+                    )
                 )}
             </div>
         </>

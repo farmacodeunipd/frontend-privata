@@ -1,11 +1,42 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { StarIcon } from "@heroicons/react/20/solid";
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(" ");
 }
 
-function Risultati({ data }) {
+async function getClient(id) {
+    const response = await axios.get(`http://localhost/api/clients/${id}`);
+    return response.data.rag_soc;
+}
+
+async function getProduct(id) {
+    const response = await axios.get(`http://localhost/api/products/${id}`);
+    return response.data.des_art;
+}
+
+function Risultati({ data, selectTopic }) {
+    const [names, setNames] = useState([]);
+    useEffect(() => {
+        const fetchData = async () => {
+            const names = await Promise.all(
+                data.map(async (item) => {
+                    if (selectTopic.id === 2) {
+                        return await getProduct(item.id);
+                    } else if (selectTopic.id === 3) {
+                        return await getClient(item.id);
+                    } else {
+                        console.log("errore");
+                        return "";
+                    }
+                })
+            );
+            setNames(names);
+        };
+        fetchData();
+    }, [data]);
+
     return (
         <>
             <div className="overflow-y-auto custom-scrollbar shadow-lg ring-1 ring-black ring-opacity-5 md:mx-0 rounded-3xl">
@@ -33,13 +64,13 @@ function Risultati({ data }) {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 dark:divide-gray-900 bg-white dark:bg-gray-600">
-                        {data.map((data) => (
+                        {data.map((data, index) => (
                             <tr key={data.id}>
                                 <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 dark:text-white sm:pl-6">
                                     {data.id}
                                 </td>
                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  dark:text-gray-200">
-                                    {/* {nome} */}
+                                    {names[index]}
                                 </td>
                                 <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500  dark:text-gray-200 lg:table-cell">
                                     {/* {data.value} */}
@@ -48,7 +79,7 @@ function Risultati({ data }) {
                                             <StarIcon
                                                 key={rating}
                                                 className={classNames(
-                                                    data.value > rating
+                                                    data.value >= rating
                                                         ? "text-gray-800 dark:text-gray-900"
                                                         : "text-gray-300 dark:text-gray-200",
                                                     "h-5 w-5 flex-shrink-0"

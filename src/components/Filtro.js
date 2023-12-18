@@ -14,7 +14,7 @@ const tops = [
     { id: 3, name: "Top 10", valore: "10", unavailable: false },
 ];
 
-function Filtro({ onFetchResults, clients, products }) {
+function Filtro({ onFetchResults, clients, products, onTopicChange }) {
     const [selectedSearchTopic, setSelectedSearchTopic] = useState(
         searchTopics[0]
     );
@@ -66,7 +66,10 @@ function Filtro({ onFetchResults, clients, products }) {
                     <div className="w-48 mx-auto">
                         <Listbox
                             value={selectedSearchTopic}
-                            onChange={setSelectedSearchTopic}
+                            onChange={(e) => {
+                                setSelectedSearchTopic(e);
+                                onTopicChange(e);
+                            }}
                             name="searchTopic"
                         >
                             <div className="relative">
