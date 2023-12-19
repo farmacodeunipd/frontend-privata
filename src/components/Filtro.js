@@ -12,6 +12,7 @@ const tops = [
     { id: 1, name: "Seleziona N...", valore: "null", unavailable: true },
     { id: 2, name: "Top 5", valore: "5", unavailable: false },
     { id: 3, name: "Top 10", valore: "10", unavailable: false },
+    { id: 4, name: "Top 20", valore: "20", unavailable: false },
 ];
 
 function Filtro({ onFetchResults, clients, products, onTopicChange }) {
@@ -20,15 +21,17 @@ function Filtro({ onFetchResults, clients, products, onTopicChange }) {
     );
     const [selectedClient, setSelectedClient] = useState();
     useEffect(() => {
-        if (clients.length > 0) {
-            setSelectedClient(clients[0]);
-        }
+        // if (clients.length > 0) {
+        //     setSelectedClient(clients[0]);
+        // }
+        setSelectedClient(clients[0]);
     }, [clients]);
     const [selectedProduct, setSelectedProduct] = useState();
     useEffect(() => {
-        if (products.length > 0) {
-            setSelectedProduct(products[0]);
-        }
+        // if (products.length > 0) {
+        //     setSelectedProduct(products[0]);
+        // }
+        setSelectedProduct(products[0]);
     }, [products]);
     const [query, setQuery] = useState("");
     const [selectedTop, setSelectedTop] = useState(tops[0]);

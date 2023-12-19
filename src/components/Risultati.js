@@ -70,7 +70,9 @@ function Risultati({ data, selectTopic }) {
                                     {data.id}
                                 </td>
                                 <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500  dark:text-gray-200">
-                                    {names[index]}
+                                    {names[index]
+                                        ? names[index]
+                                        : "-- NON TROVATO --"}
                                 </td>
                                 <td className="hidden whitespace-nowrap px-3 py-4 text-sm text-gray-500  dark:text-gray-200 lg:table-cell">
                                     {/* {data.value} */}

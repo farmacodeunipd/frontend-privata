@@ -11,6 +11,7 @@ function Vista() {
 
     function handleTopicChange(type) {
         setSelectedTopic(type);
+        setResults(null);
     }
 
     function fetchResults(object, id, n) {
@@ -34,10 +35,9 @@ function Vista() {
         getClients();
     }, []);
 
-    function getClients() {
-        axios.get("http://localhost/api/clients").then((response) => {
-            setClients(response.data);
-        });
+    async function getClients() {
+        const response = await axios.get("http://localhost/api/clients");
+        setClients(response.data);
     }
 
     const [products, setProducts] = useState([]);
@@ -45,10 +45,9 @@ function Vista() {
         getProducts();
     }, []);
 
-    function getProducts() {
-        axios.get("http://localhost/api/products").then((response) => {
-            setProducts(response.data);
-        });
+    async function getProducts() {
+        const response = await axios.get("http://localhost/api/products");
+        setProducts(response.data);
     }
 
     return (
