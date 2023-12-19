@@ -14,20 +14,14 @@ function Vista() {
         setResults(null);
     }
 
-    function fetchResults(object, id, n) {
+    async function fetchResults(object, id, n) {
         setLoading(true);
-        axios
-            .get(`http://localhost:5000/esegui_algoritmo/${object}/${id}/${n}`)
-            .then((response) => {
-                console.log("Risposta:", response.data);
-                setResults(response.data);
-            })
-            .catch((error) => {
-                console.error("Error fetching results:", error);
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+        const response = await axios.get(
+            `http://localhost:5000/esegui_algoritmo/${object}/${id}/${n}`
+        );
+        console.log("Risposta:", response.data);
+        setResults(response.data);
+        setLoading(false);
     }
 
     const [clients, setClients] = useState([]);
