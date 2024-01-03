@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "./components/Header";
-import Vista from "./components/Vista";
+import SearchView from "./components/SearchView";
 import Footer from "./components/Footer";
 
 function App() {
@@ -8,7 +8,7 @@ function App() {
         <>
             <div className="p-4 bg-white dark:bg-gray-950 h-screen space-y-4 flex flex-col">
                 <Header></Header>
-                <Vista></Vista>
+                <SearchView></SearchView>
                 <Footer></Footer>
             </div>
         </>
